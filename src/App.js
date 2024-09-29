@@ -1,8 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { useEffect, useState } from "react";
 
 function App(props) {
-  const fcm = localStorage.getItem("fcm") || "";
+  const [fcm, setFCM] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      const fcmx = localStorage.getItem("fcm") || "";
+
+      setFCM(fcmx);
+    }, 2000);
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
