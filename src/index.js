@@ -30,7 +30,9 @@ const requestPermission = async () => {
       console.log("Notification permission granted.");
 
       // Get FCM token using your VAPID key
-      const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY; // Replace this with your actual VAPID key from Firebase Console
+      // const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY; // Replace this with your actual VAPID key from Firebase Console
+      const vapidKey =
+        "BKyDjfNuiWdeRFKO1aZUQ1__g1HjO2DZ_gZ6_vBczmEmfp8S4FL03iByoW5AhtmldvdZ0cqyzDN_I7G8tWK9sCo"; // Replace this with your actual VAPID key from Firebase Console
       const currentToken = await getToken(messaging, { vapidKey });
 
       if (currentToken) {
