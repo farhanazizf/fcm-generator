@@ -21,28 +21,45 @@ function App() {
   // Retrieve the messaging instance
   const messaging = getMessaging(app);
 
+  getToken(messaging, {
+    vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+  })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("FCM Registration Token:", currentToken);
+        setFCM(currentToken);
+      } else {
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+      }
+    })
+    .catch((err) => {
+      console.error("An error occurred while retrieving token. ", err);
+    });
+
   // Request permission to show notifications
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
       console.log("Notification permission granted.");
 
       // Get the FCM registration token
-      getToken(messaging, {
-        vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-      })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("FCM Registration Token:", currentToken);
-            setFCM(currentToken);
-          } else {
-            console.log(
-              "No registration token available. Request permission to generate one."
-            );
-          }
-        })
-        .catch((err) => {
-          console.error("An error occurred while retrieving token. ", err);
-        });
+      // getToken(messaging, {
+      //   vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+      // })
+      //   .then((currentToken) => {
+      //     if (currentToken) {
+      //       console.log("FCM Registration Token:", currentToken);
+      //       setFCM(currentToken);
+      //     } else {
+      //       console.log(
+      //         "No registration token available. Request permission to generate one."
+      //       );
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.error("An error occurred while retrieving token. ", err);
+      //   });
     } else {
       console.log("Unable to get permission to notify.");
     }
