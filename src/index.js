@@ -21,32 +21,63 @@ const app = initializeApp(firebaseConfig);
 // Retrieve the messaging instance
 const messaging = getMessaging(app);
 
-// Request permission to show notifications
-Notification.requestPermission().then((permission) => {
-  if (permission === "granted") {
-    console.log("Notification permission granted.");
+const requestPermission = async () => {
+  try {
+    // Request notification permission from the user
+    const permission = await Notification.requestPermission();
 
-    // Get the FCM registration token
-    getToken(messaging, {
-      vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-    })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log("FCM Registration Token:", currentToken);
-          // setFCM(currentToken);
-        } else {
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-        }
-      })
-      .catch((err) => {
-        console.error("2. An error occurred while retrieving token. ", err);
-      });
-  } else {
-    console.log("Unable to get permission to notify.");
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+
+      // Get FCM token using your VAPID key
+      const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY; // Replace this with your actual VAPID key from Firebase Console
+      const currentToken = await getToken(messaging, { vapidKey });
+
+      if (currentToken) {
+        console.log("FCM Token:", currentToken);
+        // You can send the token to your server or store it locally
+      } else {
+        console.error(
+          "No registration token available. Request permission to generate one."
+        );
+      }
+    } else {
+      console.error("Notification permission denied.");
+    }
+  } catch (error) {
+    console.error("An error occurred while retrieving the token:", error);
   }
-});
+};
+
+// Call the function to request permission and generate the FCM token
+requestPermission();
+
+// Request permission to show notifications
+// Notification.requestPermission().then((permission) => {
+//   if (permission === "granted") {
+//     console.log("Notification permission granted.");
+
+//     // Get the FCM registration token
+//     getToken(messaging, {
+//       vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+//     })
+//       .then((currentToken) => {
+//         if (currentToken) {
+//           console.log("FCM Registration Token:", currentToken);
+//           // setFCM(currentToken);
+//         } else {
+//           console.log(
+//             "No registration token available. Request permission to generate one."
+//           );
+//         }
+//       })
+//       .catch((err) => {
+//         console.error("2. An error occurred while retrieving token. ", err);
+//       });
+//   } else {
+//     console.log("Unable to get permission to notify.");
+//   }
+// });
 
 // console.log("x");
 if ("serviceWorker" in navigator) {
