@@ -36,7 +36,7 @@ function App() {
       }
     })
     .catch((err) => {
-      console.error("An error occurred while retrieving token. ", err);
+      console.error("1. An error occurred while retrieving token. ", err);
     });
 
   onMessage(messaging, (payload) => {
@@ -50,22 +50,22 @@ function App() {
       console.log("Notification permission granted.");
 
       // Get the FCM registration token
-      // getToken(messaging, {
-      //   vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-      // })
-      //   .then((currentToken) => {
-      //     if (currentToken) {
-      //       console.log("FCM Registration Token:", currentToken);
-      //       setFCM(currentToken);
-      //     } else {
-      //       console.log(
-      //         "No registration token available. Request permission to generate one."
-      //       );
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.error("An error occurred while retrieving token. ", err);
-      //   });
+      getToken(messaging, {
+        vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+      })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("FCM Registration Token:", currentToken);
+            setFCM(currentToken);
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.error("2. An error occurred while retrieving token. ", err);
+        });
     } else {
       console.log("Unable to get permission to notify.");
     }
