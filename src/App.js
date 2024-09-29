@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { useState } from "react";
 
 function App() {
@@ -40,6 +40,11 @@ function App() {
     .catch((err) => {
       console.error("An error occurred while retrieving token. ", err);
     });
+
+  onMessage(messaging, (payload) => {
+    console.log("Message received. ", payload);
+    // ...
+  });
 
   // Request permission to show notifications
   Notification.requestPermission().then((permission) => {
