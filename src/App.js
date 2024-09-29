@@ -7,69 +7,69 @@ import { useState } from "react";
 function App() {
   const [fcm, setFCM] = useState("");
 
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  };
+  // const firebaseConfig = {
+  //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  //   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  //   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  //   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  //   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  //   appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  // };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  // // Initialize Firebase
+  // const app = initializeApp(firebaseConfig);
 
-  // Retrieve the messaging instance
-  const messaging = getMessaging(app);
+  // // Retrieve the messaging instance
+  // const messaging = getMessaging(app);
 
-  getToken(messaging, {
-    vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log("FCM Registration Token:", currentToken);
-        setFCM(currentToken);
-      } else {
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-      }
-    })
-    .catch((err) => {
-      console.error("1. An error occurred while retrieving token. ", err);
-    });
+  // getToken(messaging, {
+  //   vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+  // })
+  //   .then((currentToken) => {
+  //     if (currentToken) {
+  //       console.log("FCM Registration Token:", currentToken);
+  //       setFCM(currentToken);
+  //     } else {
+  //       console.log(
+  //         "No registration token available. Request permission to generate one."
+  //       );
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.error("1. An error occurred while retrieving token. ", err);
+  //   });
 
-  onMessage(messaging, (payload) => {
-    console.log("Message received. ", payload);
-    // ...
-  });
+  // onMessage(messaging, (payload) => {
+  //   console.log("Message received. ", payload);
+  //   // ...
+  // });
 
-  // Request permission to show notifications
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      console.log("Notification permission granted.");
+  // // Request permission to show notifications
+  // Notification.requestPermission().then((permission) => {
+  //   if (permission === "granted") {
+  //     console.log("Notification permission granted.");
 
-      // Get the FCM registration token
-      getToken(messaging, {
-        vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-      })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("FCM Registration Token:", currentToken);
-            setFCM(currentToken);
-          } else {
-            console.log(
-              "No registration token available. Request permission to generate one."
-            );
-          }
-        })
-        .catch((err) => {
-          console.error("2. An error occurred while retrieving token. ", err);
-        });
-    } else {
-      console.log("Unable to get permission to notify.");
-    }
-  });
+  //     // Get the FCM registration token
+  //     getToken(messaging, {
+  //       vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+  //     })
+  //       .then((currentToken) => {
+  //         if (currentToken) {
+  //           console.log("FCM Registration Token:", currentToken);
+  //           setFCM(currentToken);
+  //         } else {
+  //           console.log(
+  //             "No registration token available. Request permission to generate one."
+  //           );
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.error("2. An error occurred while retrieving token. ", err);
+  //       });
+  //   } else {
+  //     console.log("Unable to get permission to notify.");
+  //   }
+  // });
 
   return (
     <div className="App">
