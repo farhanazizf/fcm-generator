@@ -7,8 +7,6 @@ import { useState } from "react";
 function App() {
   const [fcm, setFCM] = useState("");
 
-  console.log("env", process.env);
-
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
