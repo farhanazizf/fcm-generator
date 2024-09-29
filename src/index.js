@@ -7,16 +7,17 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // console.log("x");
-// // if ("serviceWorker" in navigator) {
-//   navigator.serviceWorker
-//     .register(`/firebase-messaging-sw.js`)
-//     .then((registration) => {
-//       console.log("Service Worker registered with scope:", registration.scope);
-//     })
-//     .catch((error) => {
-//       console.error("Service Worker registration failed:", error);
-//     });
-// }
+if ("serviceWorker" in navigator) {
+  console.log("zzx");
+  navigator.serviceWorker
+    .register(`${process.env.PUBLIC_URL}/firebase-messaging-sw.js`)
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration.scope);
+    })
+    .catch((error) => {
+      console.error("Service Worker registration failed:", error);
+    });
+}
 
 root.render(
   <React.StrictMode>
